@@ -57,11 +57,14 @@
 // OpenCV 2.0
 #include <opencv2/opencv.hpp>
 
+// OpenCV 2.0 linux
+#ifndef _WIN32
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
 #include <opencv2/core/core_c.h>
 #include <opencv2/highgui/highgui_c.h>
+#endif
 //#include <opencv2/videoio/legacy/constants_c.h>
 
 // FFmpeg
@@ -1084,6 +1087,7 @@ public:
     // Move with velocity [m/s]
     virtual void move(double vx, double vy, double vr);
     virtual void move3D(double vx, double vy, double vz, double vr);
+    virtual void tilt3D(double phi, double theta, double gaz, double yaw);
 
     // Change camera channel
     virtual void setCamera(int channel);

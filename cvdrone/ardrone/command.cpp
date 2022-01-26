@@ -296,6 +296,26 @@ void ARDrone::move3D(double vx, double vy, double vz, double vr)
     }
 }
 
+void ARDrone::tilt3D(double phi, double theta, double gaz, double yaw)
+{
+    // AR.Drone is flying
+    if (!onGround()) {
+        // Command velocities
+        float v[4] = {(float)phi, (float)theta, (float)gaz, (float)yaw};
+        int mode = (1);
+
+        // Nomarization (-1.0 to +1.0)
+        for (int i = 0; i < 4; i++) {
+            if (fabs(v[i]) > 1.0) v[i] /= fabs(v[i]);
+        }
+
+        // Send a command
+        if (mutexCommand) pthread_mutex_lock(mutexCommand);
+        sockCommand.sendf("AT*PCMD=%d,%d,%d,%d,%d,%d\r", ++seq, mode, *(int*)(&v[0]), *(int*)(&v[1]), *(int*)(&v[2]), *(int*)(&v[3]));
+        if (mutexCommand) pthread_mutex_unlock(mutexCommand);
+    }
+}
+
 // --------------------------------------------------------------------------
 //! @brief   Change the camera channel.
 //! @param   channel Camera channel 
