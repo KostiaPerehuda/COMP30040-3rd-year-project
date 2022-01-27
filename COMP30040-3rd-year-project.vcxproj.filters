@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Source Files\cvdrone">
+      <UniqueIdentifier>{54273abc-adfa-47d6-b4db-f22a69379dfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cvdrone">
+      <UniqueIdentifier>{2577a74b-a3c5-46dc-92e8-4cb3983b8a68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src">
+      <UniqueIdentifier>{040ff026-ce67-4dbd-a1da-f948125e4aca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\src">
+      <UniqueIdentifier>{12d51620-5e99-4433-86bd-2c34b9ffb0b0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cvdrone\ardrone\ardrone.cpp">
+      <Filter>Source Files\cvdrone</Filter>
+    </ClCompile>
+    <ClCompile Include="cvdrone\ardrone\command.cpp">
+      <Filter>Source Files\cvdrone</Filter>
+    </ClCompile>
+    <ClCompile Include="cvdrone\ardrone\config.cpp">
+      <Filter>Source Files\cvdrone</Filter>
+    </ClCompile>
+    <ClCompile Include="cvdrone\ardrone\video.cpp">
+      <Filter>Source Files\cvdrone</Filter>
+    </ClCompile>
+    <ClCompile Include="cvdrone\ardrone\version.cpp">
+      <Filter>Source Files\cvdrone</Filter>
+    </ClCompile>
+    <ClCompile Include="cvdrone\ardrone\udp.cpp">
+      <Filter>Source Files\cvdrone</Filter>
+    </ClCompile>
+    <ClCompile Include="cvdrone\ardrone\tcp.cpp">
+      <Filter>Source Files\cvdrone</Filter>
+    </ClCompile>
+    <ClCompile Include="cvdrone\ardrone\navdata.cpp">
+      <Filter>Source Files\cvdrone</Filter>
+    </ClCompile>
+    <ClCompile Include="src\COMP30040-3rd-year-project.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\display-video-listener.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lucas-kanade-optical-flow.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\video-manager.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cvdrone\ardrone\ardrone.h">
+      <Filter>Header Files\cvdrone</Filter>
+    </ClInclude>
+    <ClInclude Include="cvdrone\ardrone\uvlc.h">
+      <Filter>Header Files\cvdrone</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dense-optical-flow.h">
+      <Filter>Header Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\display-video-listener.h">
+      <Filter>Header Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\image-listener-interface.h">
+      <Filter>Header Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lucas-kanade-optical-flow.h">
+      <Filter>Header Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\video-manager.h">
+      <Filter>Header Files\src</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
