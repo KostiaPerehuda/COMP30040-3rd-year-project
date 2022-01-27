@@ -22,46 +22,45 @@
 
 
 int main() {
-	std::cout << "Failed to initialize." << std::endl;
-//	// AR.Drone class
-//	ARDrone ardrone;
-//
-//	// Initialize
-//	if (!ardrone.open()) {
-//		std::cout << "Failed to initialize." << std::endl;
-////			delete ardrone;
-//		return -1;
-//	}
-//
-//	VideoManager manager(&ardrone);
-//
-//	DisplayVideoListener listener1("camera1");
-////	DisplayVideoListener listener2("camera2");
-//	LucasKanadeOpticalFlow listener3("lk-optical-flow");
-//
-//	manager.addImageListener(&listener1);
-////	manager.addImageListener(&listener2);
-//	manager.addImageListener(&listener3);
-//
-//	std::thread t = manager.spawn();
-//
-//	char key;
-//	while (1) {
-//		std::cin >> key;
-//		if (key == 'q') {
-//			manager.stop();
-//			break;
-//		}
-//	}
-//
-//	t.join();
-//	// See you
-//	ardrone.close();
-//
-////	delete listener1;
-////	delete listener2;
-////	delete manager;
-////	delete ardrone;
+	// AR.Drone class
+	ARDrone ardrone;
+
+	// Initialize
+	if (!ardrone.open()) {
+		std::cout << "Failed to initialize." << std::endl;
+//			delete ardrone;
+		return -1;
+	}
+
+	VideoManager manager(&ardrone);
+
+	DisplayVideoListener listener1("camera1");
+//	DisplayVideoListener listener2("camera2");
+	LucasKanadeOpticalFlow listener3("lk-optical-flow");
+
+	manager.addImageListener(&listener1);
+//	manager.addImageListener(&listener2);
+	manager.addImageListener(&listener3);
+
+	std::thread t = manager.spawn();
+
+	char key;
+	while (1) {
+		std::cin >> key;
+		if (key == 'q') {
+			manager.stop();
+			break;
+		}
+	}
+
+	t.join();
+	// See you
+	ardrone.close();
+
+//	delete listener1;
+//	delete listener2;
+//	delete manager;
+//	delete ardrone;
 
 	return 0;
 }
