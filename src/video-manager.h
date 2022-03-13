@@ -8,25 +8,26 @@
 #ifndef VIDEO_MANAGER_H_
 #define VIDEO_MANAGER_H_
 
-#include <thread>
+
 #include <mutex>
+#include <vector>
+#include "manager-interface.h"
 #include "image-listener-interface.h"
 #include "ardrone/ardrone.h"
 
-class VideoManager {
+class VideoManager : public ManagerInterface
+{
 private:
-	std::mutex m_;
-	bool shouldRun_;
-	ARDrone* drone_;
-	std::vector<ImageListenerInterface*> imageListeners_;
+	std::mutex m_mutex;
+	ARDrone* m_drone;
+	std::vector<ImageListenerInterface*> m_imageListeners;
 
 	void updateListeners(cv::Mat& image);
 public:
 	VideoManager(ARDrone* drone);
+
 	void addImageListener(ImageListenerInterface* listener);
-	void stop();
-	void run();
-	std::thread spawn();
+	bool poll() override;
 };
 
 #endif /* VIDEO_MANAGER_H_ */

@@ -8,46 +8,29 @@
 #include "video-manager.h"
 #include "ardrone/ardrone.h"
 
-VideoManager::VideoManager(ARDrone* drone) : shouldRun_(true), drone_(drone) {
+VideoManager::VideoManager(ARDrone* drone) : m_drone(drone) {
 }
 
 void VideoManager::updateListeners(cv::Mat& image) {
-//	std::vector<std::thread> threads;
-
-	m_.lock();
-	for (std::size_t i = 0; i < imageListeners_.size(); ++i) {
-		imageListeners_[i]->onImageReceived(image);
-
-//		threads.push_back(std::thread(&ImageListenerInterface::onImageReceived, imageListeners_[i], image));
+	m_mutex.lock();
+	for (std::size_t i = 0; i < m_imageListeners.size(); ++i) {
+		m_imageListeners[i]->onImageReceived(image);
 	}
-	m_.unlock();
-
-//	for (std::size_t i = 0; i < threads.size(); ++i) {
-//		threads[i].join();
-//	}
-//
-//	threads.clear();
+	m_mutex.unlock();
 }
 
 void VideoManager::addImageListener(ImageListenerInterface* listener) {
-	m_.lock();
-	imageListeners_.push_back(listener);
-	m_.unlock();
+	m_mutex.lock();
+	m_imageListeners.push_back(listener);
+	m_mutex.unlock();
 }
 
-void VideoManager::run() {
-	while (shouldRun_) {
-		if (drone_->willGetNewImage()) {
-			cv::Mat image = drone_->getImage();
-			updateListeners(image);
-		}
+bool VideoManager::poll() {
+	if (!m_drone->willGetNewImage()) {
+		return false;
 	}
-}
 
-void VideoManager::stop() {
-	shouldRun_ = false;
-}
-
-std::thread VideoManager::spawn() {
-	return std::thread(&VideoManager::run, this);
+	cv::Mat image = m_drone->getImage();
+	updateListeners(image);
+	return true;
 }

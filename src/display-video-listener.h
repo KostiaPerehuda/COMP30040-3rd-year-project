@@ -8,9 +8,11 @@
 #ifndef DISPLAY_VIDEO_LISTENER_H_
 #define DISPLAY_VIDEO_LISTENER_H_
 
+
 #include "image-listener-interface.h"
 
-class DisplayVideoListener : public ImageListenerInterface {
+class DisplayVideoListener : public ImageListenerInterface
+{
 private:
 	std::string windowName_;
 public:
@@ -19,7 +21,6 @@ public:
 
 	void onImageReceived(cv::Mat image);
 };
-
 
 
 #endif /* DISPLAY_VIDEO_LISTENER_H_ */

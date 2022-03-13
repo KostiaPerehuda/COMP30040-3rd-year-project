@@ -8,9 +8,11 @@
 #ifndef IMAGE_LISTENER_INTERFACE_H_
 #define IMAGE_LISTENER_INTERFACE_H_
 
+
 #include <opencv2/core/core.hpp>
 
-class ImageListenerInterface {
+class ImageListenerInterface
+{
 public:
 	virtual void onImageReceived(cv::Mat image) = 0;
 
