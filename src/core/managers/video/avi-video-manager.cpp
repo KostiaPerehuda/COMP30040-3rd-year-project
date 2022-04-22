@@ -5,7 +5,9 @@
 AviVideoManager::AviVideoManager(std::string path) : videoCapture(path)
 //AviVideoManager::AviVideoManager(std::string path) : frameCount(0)
 {
-	cv::VideoCapture videoCapture(path);
+	setApplicaton(nullptr);
+
+	//cv::VideoCapture videoCapture(path);
 
 	if (!videoCapture.isOpened()) {
 		std::string error = "ERROR: Cannot open file '" + path + "'!";

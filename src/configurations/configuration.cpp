@@ -29,12 +29,10 @@ int Configuration::droneFlight()
 
 	// Setup drone video stream
 	DroneVideoManager droneVideoManager(&ardrone);
-	//VideoRecorder recorder;
 
 	// Display video
 	DisplayAndRecordVideo display("camera");
 	droneVideoManager.addImageListener(&display);
-	//droneVideoManager.addImageListener(&recorder);
 
 	// Estimate motion
 	MotionEstimator estimator;
@@ -155,4 +153,4 @@ int Configuration::filesystemVideoImageProcessing(std::string name)
 	return 0;
 }
 
-Configuration::PidConfig Configuration::pidConfig = { 0.7f, 0.2f, 0.1f, 0.05f };
+Configuration::PidConfig Configuration::pidConfig = { 0.7f, 0.2f, 0.1f, 0.3f };

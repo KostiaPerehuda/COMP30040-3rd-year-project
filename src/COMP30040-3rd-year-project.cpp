@@ -9,7 +9,7 @@
 #include "configurations/configuration.h"
 
 int main() {
-	Configuration::filesystemVideoImageProcessing("2022-4-20-15-21-44.avi");
+	//Configuration::filesystemVideoImageProcessing("2022-4-20-15-21-44.avi");
 	//Configuration::droneVideoImageProcessing();
-	//Configuration::droneFlight();
+	Configuration::droneFlight();
 }

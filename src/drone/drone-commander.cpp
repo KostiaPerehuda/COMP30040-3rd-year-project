@@ -5,6 +5,7 @@ DroneCommander::DroneCommander(ARDrone* drone)
 	: drone(drone), settings({ false, false, false }),
 	isSpeedUpdated(false), stabilizer(nullptr), speed()
 {
+	setApplicaton(nullptr);
 	switchCamera();
 }
 
@@ -12,6 +13,7 @@ DroneCommander::DroneCommander(ARDrone* drone, SpeedController* stabilizer)
 	: drone(drone), settings({ false, false, false }),
 	isSpeedUpdated(false), stabilizer(stabilizer), speed()
 {
+	setApplicaton(nullptr);
 	switchCamera();
 }
 
@@ -33,10 +35,10 @@ vec4f DroneCommander::toMove3DFormat(vec4f speed)
 	// r = rotation
 
 	if (settings.dualRate) return {
-		speed.x *  5.0f,
-		speed.z * -5.0f,
-		speed.y *  1.0f,
-		speed.r * -2.0f,
+		speed.x *  5.0f * 0.99f,
+		speed.z * -5.0f * 0.99f,
+		speed.y *  1.0f * 0.99f,
+		speed.r * -2.0f * 0.99f,
 	};
 	else return {
 		speed.x *  2.5f,
@@ -144,6 +146,11 @@ void DroneCommander::enableOrDisableStabilization()
 		return;
 	}
 
+	/*if (drone->onGround()) {
+		std::cout << "CANNOT enable or disable stabilization! Drone is on ground!\n";
+		return;
+	}*/
+
 	if (stabilizer->isEnabled()) {
 		disableStabilizer();
 	}
@@ -187,7 +194,7 @@ void DroneCommander::onButtonY(bool pressed)
 
 void DroneCommander::onLeftShoulder(bool pressed)
 {
-	//if (pressed) return;
+	if (pressed) return;
 	//lock(); enableOrDisableStabilization(); unlock();
 }
 
