@@ -5,7 +5,6 @@ DroneCommander::DroneCommander(ARDrone* drone)
 	: drone(drone), settings({ false, false, false }),
 	isSpeedUpdated(false), stabilizer(nullptr), speed()
 {
-	setApplicaton(nullptr);
 	switchCamera();
 }
 

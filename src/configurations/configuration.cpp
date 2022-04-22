@@ -153,4 +153,4 @@ int Configuration::filesystemVideoImageProcessing(std::string name)
 	return 0;
 }
 
-Configuration::PidConfig Configuration::pidConfig = { 0.7f, 0.2f, 0.1f, 0.3f };
+Configuration::PidConfig Configuration::pidConfig = { 0.80f, 0.35f, 0.15f, 0.30f };

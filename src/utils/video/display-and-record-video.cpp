@@ -7,7 +7,7 @@ DisplayAndRecordVideo::DisplayAndRecordVideo(std::string windowName)
 	: windowName(windowName), recorder(nullptr),
 	recordingButtonPressed(false), shutdownButtonPressed(false)
 {
-	setApplicaton(nullptr);
+	//cv::namedWindow(windowName);
 }
 
 DisplayAndRecordVideo::~DisplayAndRecordVideo()

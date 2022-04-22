@@ -14,12 +14,10 @@ class AviVideoManager : public AbstractVideoManager, public ApplicatonContainer
 {
 private:
 	cv::VideoCapture videoCapture;
-	//cv::Mat* frameBuffer;
 
 	Timer timer;
 
 	int fps, totalFrameCount;
-	//int frameCount;
 
 public:
 	AviVideoManager(std::string path);

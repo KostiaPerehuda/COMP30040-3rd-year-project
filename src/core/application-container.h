@@ -10,6 +10,8 @@ private:
 	AbstractManager* application;
 
 public:
+	ApplicatonContainer();
+	ApplicatonContainer(AbstractManager* application);
 	virtual ~ApplicatonContainer() = default;
 
 public:
