@@ -25,6 +25,30 @@
     <Filter Include="Header Files\src">
       <UniqueIdentifier>{12d51620-5e99-4433-86bd-2c34b9ffb0b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\gamepad">
+      <UniqueIdentifier>{a9b5e605-0fc1-4ee1-9ef3-57f46076bc6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\video">
+      <UniqueIdentifier>{4ca67319-7e95-4ba9-8b31-2564d6547c90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gamepad">
+      <UniqueIdentifier>{12245ef9-170b-406e-9713-89628692e4d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\video">
+      <UniqueIdentifier>{8fd6af7b-e39d-4fca-81be-96c28d573955}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\pid">
+      <UniqueIdentifier>{82508d81-52cc-4142-89f2-7404146ef5cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\pid">
+      <UniqueIdentifier>{20c149cb-3c4e-4155-a2a0-2c071daa688d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui">
+      <UniqueIdentifier>{02e18772-4b1c-427c-ad92-2e1cbcc27526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui">
+      <UniqueIdentifier>{376a6132-85b1-41b7-b568-f7fc53d485f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cvdrone\ardrone\ardrone.cpp">
@@ -54,14 +78,71 @@
     <ClCompile Include="src\COMP30040-3rd-year-project.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\display-video-listener.cpp">
-      <Filter>Source Files\src</Filter>
+    <ClCompile Include="src\utils\dsp\low-pass-filter.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\lucas-kanade-optical-flow.cpp">
-      <Filter>Source Files\src</Filter>
+    <ClCompile Include="src\utils\dsp\pid-controller.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\video-manager.cpp">
-      <Filter>Source Files\src</Filter>
+    <ClCompile Include="src\utils\video\display-video-listener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\video\video-recorder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\lockable-object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\vec2f-visualizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\listeners\gamepad-listener-interface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\managers\gamepad\gamepad-input-manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\managers\video\abstract-video-manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\managers\video\avi-video-manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\managers\video\drone-video-manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\managers\abstract-manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\configurations\camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\configurations\configuration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\video\display-and-record-video.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drone\stabilisation\speed-controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drone\stabilisation\motion-estimator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drone\drone-commander.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\managers\union-manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\application-container.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drone\stabilisation\motion-listener.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,20 +152,81 @@
     <ClInclude Include="cvdrone\ardrone\uvlc.h">
       <Filter>Header Files\cvdrone</Filter>
     </ClInclude>
-    <ClInclude Include="src\dense-optical-flow.h">
-      <Filter>Header Files\src</Filter>
+    <ClInclude Include="src\utils\dsp\low-pass-filter.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\display-video-listener.h">
-      <Filter>Header Files\src</Filter>
+    <ClInclude Include="src\utils\dsp\pid-controller.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\image-listener-interface.h">
-      <Filter>Header Files\src</Filter>
+    <ClInclude Include="src\utils\video\display-video-listener.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\lucas-kanade-optical-flow.h">
-      <Filter>Header Files\src</Filter>
+    <ClInclude Include="src\utils\video\video-recorder.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\video-manager.h">
-      <Filter>Header Files\src</Filter>
+    <ClInclude Include="src\utils\lockable-object.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\vec2f-visualizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\listeners\gamepad-listener-interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\listeners\image-listener-interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\managers\gamepad\gamepad-input-manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\managers\video\abstract-video-manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\managers\video\avi-video-manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\managers\video\drone-video-manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\managers\abstract-manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\configurations\camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\configurations\configuration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\video\display-and-record-video.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drone\stabilisation\speed-controller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drone\stabilisation\motion-estimator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drone\drone-commander.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\managers\union-manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\application-container.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drone\stabilisation\motion-listener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="win32bin\video.avi" />
+    <None Include="videos\video.avi" />
   </ItemGroup>
 </Project>

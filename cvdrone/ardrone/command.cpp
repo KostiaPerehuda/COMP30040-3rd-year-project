@@ -296,6 +296,14 @@ void ARDrone::move3D(double vx, double vy, double vz, double vr)
     }
 }
 
+// --------------------------------------------------------------------------
+//! @brief   Tilt the AR.Drone in 3D space.
+//! @param   phi   left-right tilt  [-1;1]
+//! @param   theta back-front tilt  [-1;1]
+//! @param   gaz   vertical speed   [-1;1]
+//! @param   yaw   angular velocity [-1;1]
+//! @return  None
+// --------------------------------------------------------------------------
 void ARDrone::tilt3D(double phi, double theta, double gaz, double yaw)
 {
     // AR.Drone is flying

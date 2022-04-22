@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -56,14 +56,14 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)3rdparty\opencv\include;$(ProjectDir)3rdparty\ffmpeg\include;$(ProjectDir)3rdparty\pthread\include;$(ProjectDir)3rdparty\glut\include;$(ProjectDir)cvdrone;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)3rdparty\opencv\include;$(ProjectDir)3rdparty\ffmpeg\include;$(ProjectDir)3rdparty\pthread\include;$(ProjectDir)3rdparty\glut\include;$(ProjectDir)cvdrone;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(ProjectDir)3rdparty\opencv\lib;$(ProjectDir)3rdparty\ffmpeg\lib;$(ProjectDir)3rdparty\pthread\lib;$(ProjectDir)3rdparty\glut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>wsock32.lib;avcodec.lib;avdevice.lib;opencv_aruco310.lib;opencv_bgsegm310.lib;opencv_bioinspired310.lib;opencv_calib3d310.lib;opencv_ccalib310.lib;opencv_core310.lib;opencv_datasets310.lib;opencv_dnn310.lib;opencv_dpm310.lib;opencv_face310.lib;opencv_features2d310.lib;opencv_flann310.lib;opencv_fuzzy310.lib;opencv_highgui310.lib;opencv_imgcodecs310.lib;opencv_imgproc310.lib;opencv_line_descriptor310.lib;opencv_ml310.lib;opencv_objdetect310.lib;opencv_optflow310.lib;opencv_photo310.lib;opencv_plot310.lib;opencv_reg310.lib;opencv_rgbd310.lib;opencv_saliency310.lib;opencv_shape310.lib;opencv_stereo310.lib;opencv_stitching310.lib;opencv_structured_light310.lib;opencv_superres310.lib;opencv_surface_matching310.lib;opencv_text310.lib;opencv_tracking310.lib;opencv_video310.lib;opencv_videoio310.lib;opencv_videostab310.lib;opencv_xfeatures2d310.lib;opencv_ximgproc310.lib;opencv_xobjdetect310.lib;opencv_xphoto310.lib;avfilter.lib;avformat.lib;avutil.lib;swresample.lib;swscale.lib;pthreadVC2.lib;glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>wsock32.lib;avcodec.lib;avdevice.lib;opencv_aruco310.lib;opencv_bgsegm310.lib;opencv_bioinspired310.lib;opencv_calib3d310.lib;opencv_ccalib310.lib;opencv_core310.lib;opencv_datasets310.lib;opencv_dnn310.lib;opencv_dpm310.lib;opencv_face310.lib;opencv_features2d310.lib;opencv_flann310.lib;opencv_fuzzy310.lib;opencv_highgui310.lib;opencv_imgcodecs310.lib;opencv_imgproc310.lib;opencv_line_descriptor310.lib;opencv_ml310.lib;opencv_objdetect310.lib;opencv_optflow310.lib;opencv_photo310.lib;opencv_plot310.lib;opencv_reg310.lib;opencv_rgbd310.lib;opencv_saliency310.lib;opencv_shape310.lib;opencv_stereo310.lib;opencv_stitching310.lib;opencv_structured_light310.lib;opencv_superres310.lib;opencv_surface_matching310.lib;opencv_text310.lib;opencv_tracking310.lib;opencv_video310.lib;opencv_videoio310.lib;opencv_videostab310.lib;opencv_xfeatures2d310.lib;opencv_ximgproc310.lib;opencv_xobjdetect310.lib;opencv_xphoto310.lib;avfilter.lib;avformat.lib;avutil.lib;swresample.lib;swscale.lib;pthreadVC2.lib;glut32.lib;Xinput9_1_0.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
     </Link>
@@ -74,7 +74,8 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(ProjectDir)3rdparty\opencv\include;$(ProjectDir)3rdparty\ffmpeg\include;$(ProjectDir)3rdparty\pthread\include;$(ProjectDir)3rdparty\glut\include;$(ProjectDir)cvdrone;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)3rdparty\opencv\include;$(ProjectDir)3rdparty\ffmpeg\include;$(ProjectDir)3rdparty\pthread\include;$(ProjectDir)3rdparty\glut\include;$(ProjectDir)cvdrone;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -83,7 +84,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(ProjectDir)3rdparty\opencv\lib;$(ProjectDir)3rdparty\ffmpeg\lib;$(ProjectDir)3rdparty\pthread\lib;$(ProjectDir)3rdparty\glut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>wsock32.lib;avcodec.lib;avdevice.lib;opencv_aruco310.lib;opencv_bgsegm310.lib;opencv_bioinspired310.lib;opencv_calib3d310.lib;opencv_ccalib310.lib;opencv_core310.lib;opencv_datasets310.lib;opencv_dnn310.lib;opencv_dpm310.lib;opencv_face310.lib;opencv_features2d310.lib;opencv_flann310.lib;opencv_fuzzy310.lib;opencv_highgui310.lib;opencv_imgcodecs310.lib;opencv_imgproc310.lib;opencv_line_descriptor310.lib;opencv_ml310.lib;opencv_objdetect310.lib;opencv_optflow310.lib;opencv_photo310.lib;opencv_plot310.lib;opencv_reg310.lib;opencv_rgbd310.lib;opencv_saliency310.lib;opencv_shape310.lib;opencv_stereo310.lib;opencv_stitching310.lib;opencv_structured_light310.lib;opencv_superres310.lib;opencv_surface_matching310.lib;opencv_text310.lib;opencv_tracking310.lib;opencv_video310.lib;opencv_videoio310.lib;opencv_videostab310.lib;opencv_xfeatures2d310.lib;opencv_ximgproc310.lib;opencv_xobjdetect310.lib;opencv_xphoto310.lib;avfilter.lib;avformat.lib;avutil.lib;swresample.lib;swscale.lib;pthreadVC2.lib;glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>wsock32.lib;avcodec.lib;avdevice.lib;opencv_aruco310.lib;opencv_bgsegm310.lib;opencv_bioinspired310.lib;opencv_calib3d310.lib;opencv_ccalib310.lib;opencv_core310.lib;opencv_datasets310.lib;opencv_dnn310.lib;opencv_dpm310.lib;opencv_face310.lib;opencv_features2d310.lib;opencv_flann310.lib;opencv_fuzzy310.lib;opencv_highgui310.lib;opencv_imgcodecs310.lib;opencv_imgproc310.lib;opencv_line_descriptor310.lib;opencv_ml310.lib;opencv_objdetect310.lib;opencv_optflow310.lib;opencv_photo310.lib;opencv_plot310.lib;opencv_reg310.lib;opencv_rgbd310.lib;opencv_saliency310.lib;opencv_shape310.lib;opencv_stereo310.lib;opencv_stitching310.lib;opencv_structured_light310.lib;opencv_superres310.lib;opencv_surface_matching310.lib;opencv_text310.lib;opencv_tracking310.lib;opencv_video310.lib;opencv_videoio310.lib;opencv_videostab310.lib;opencv_xfeatures2d310.lib;opencv_ximgproc310.lib;opencv_xobjdetect310.lib;opencv_xphoto310.lib;avfilter.lib;avformat.lib;avutil.lib;swresample.lib;swscale.lib;pthreadVC2.lib;glut32.lib;Xinput9_1_0.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -95,19 +96,61 @@
     <ClCompile Include="cvdrone\ardrone\udp.cpp" />
     <ClCompile Include="cvdrone\ardrone\version.cpp" />
     <ClCompile Include="cvdrone\ardrone\video.cpp" />
+    <ClCompile Include="src\core\application-container.cpp" />
     <ClCompile Include="src\COMP30040-3rd-year-project.cpp" />
-    <ClCompile Include="src\display-video-listener.cpp" />
-    <ClCompile Include="src\lucas-kanade-optical-flow.cpp" />
-    <ClCompile Include="src\video-manager.cpp" />
+    <ClCompile Include="src\configurations\camera.cpp" />
+    <ClCompile Include="src\configurations\configuration.cpp" />
+    <ClCompile Include="src\core\listeners\gamepad-listener-interface.cpp" />
+    <ClCompile Include="src\core\managers\abstract-manager.cpp" />
+    <ClCompile Include="src\core\managers\gamepad\gamepad-input-manager.cpp" />
+    <ClCompile Include="src\core\managers\video\abstract-video-manager.cpp" />
+    <ClCompile Include="src\core\managers\video\avi-video-manager.cpp" />
+    <ClCompile Include="src\core\managers\video\drone-video-manager.cpp" />
+    <ClCompile Include="src\drone\drone-commander.cpp" />
+    <ClCompile Include="src\drone\stabilisation\motion-estimator.cpp" />
+    <ClCompile Include="src\drone\stabilisation\motion-listener.cpp" />
+    <ClCompile Include="src\drone\stabilisation\speed-controller.cpp" />
+    <ClCompile Include="src\utils\dsp\low-pass-filter.cpp" />
+    <ClCompile Include="src\utils\dsp\pid-controller.cpp" />
+    <ClCompile Include="src\utils\lockable-object.cpp" />
+    <ClCompile Include="src\utils\timer.cpp" />
+    <ClCompile Include="src\utils\vec2f-visualizer.cpp" />
+    <ClCompile Include="src\utils\video\display-and-record-video.cpp" />
+    <ClCompile Include="src\utils\video\display-video-listener.cpp" />
+    <ClCompile Include="src\utils\video\video-recorder.cpp" />
+    <ClCompile Include="src\core\managers\union-manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cvdrone\ardrone\ardrone.h" />
     <ClInclude Include="cvdrone\ardrone\uvlc.h" />
-    <ClInclude Include="src\dense-optical-flow.h" />
-    <ClInclude Include="src\display-video-listener.h" />
-    <ClInclude Include="src\image-listener-interface.h" />
-    <ClInclude Include="src\lucas-kanade-optical-flow.h" />
-    <ClInclude Include="src\video-manager.h" />
+    <ClInclude Include="src\core\application-container.h" />
+    <ClInclude Include="src\configurations\camera.h" />
+    <ClInclude Include="src\configurations\configuration.h" />
+    <ClInclude Include="src\core\listeners\gamepad-listener-interface.h" />
+    <ClInclude Include="src\core\listeners\image-listener-interface.h" />
+    <ClInclude Include="src\core\managers\abstract-manager.h" />
+    <ClInclude Include="src\core\managers\gamepad\gamepad-input-manager.h" />
+    <ClInclude Include="src\core\managers\video\abstract-video-manager.h" />
+    <ClInclude Include="src\core\managers\video\avi-video-manager.h" />
+    <ClInclude Include="src\core\managers\video\drone-video-manager.h" />
+    <ClInclude Include="src\drone\drone-commander.h" />
+    <ClInclude Include="src\drone\stabilisation\motion-estimator.h" />
+    <ClInclude Include="src\drone\stabilisation\motion-listener.h" />
+    <ClInclude Include="src\drone\stabilisation\speed-controller.h" />
+    <ClInclude Include="src\utils\dsp\low-pass-filter.h" />
+    <ClInclude Include="src\utils\dsp\pid-controller.h" />
+    <ClInclude Include="src\utils\lockable-object.h" />
+    <ClInclude Include="src\utils\timer.h" />
+    <ClInclude Include="src\utils\vec2f-visualizer.h" />
+    <ClInclude Include="src\utils\vector.h" />
+    <ClInclude Include="src\utils\video\display-and-record-video.h" />
+    <ClInclude Include="src\utils\video\display-video-listener.h" />
+    <ClInclude Include="src\utils\video\video-recorder.h" />
+    <ClInclude Include="src\core\managers\union-manager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="videos\video.avi" />
+    <None Include="win32bin\video.avi" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
