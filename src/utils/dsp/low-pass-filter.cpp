@@ -64,12 +64,18 @@ vec2f LowPassFilter2f::getTau()
 
 vec2f LowPassFilter2f::process(vec2f value)
 {
-	return { filterX.process(value.x), filterY.process(value.y) };
+	return {
+		filterX.process(value.x),
+		filterY.process(value.y),
+	};
 }
 
 vec2f LowPassFilter2f::process(vec2f value, float dt)
 {
-	return { filterX.process(value.x, dt), filterY.process(value.y, dt) };
+	return {
+		filterX.process(value.x, dt),
+		filterY.process(value.y, dt),
+	};
 }
 
 
@@ -105,12 +111,20 @@ vec3f LowPassFilter3f::getTau()
 
 vec3f LowPassFilter3f::process(vec3f value)
 {
-	return { filterX.process(value.x), filterY.process(value.y), filterZ.process(value.z) };
+	return {
+		filterX.process(value.x),
+		filterY.process(value.y),
+		filterZ.process(value.z),
+	};
 }
 
 vec3f LowPassFilter3f::process(vec3f value, float dt)
 {
-	return { filterX.process(value.x, dt), filterY.process(value.y, dt), filterZ.process(value.z, dt) };
+	return {
+		filterX.process(value.x, dt),
+		filterY.process(value.y, dt),
+		filterZ.process(value.z, dt),
+	};
 }
 
 
@@ -149,10 +163,20 @@ vec4f LowPassFilter4f::getTau()
 
 vec4f LowPassFilter4f::process(vec4f value)
 {
-	return { filterX.process(value.x), filterY.process(value.y), filterZ.process(value.z), filterR.process(value.r) };
+	return {
+		filterX.process(value.x),
+		filterY.process(value.y),
+		filterZ.process(value.z),
+		filterR.process(value.r),
+	};
 }
 
 vec4f LowPassFilter4f::process(vec4f value, float dt)
 {
-	return { filterX.process(value.x, dt), filterY.process(value.y, dt), filterZ.process(value.z, dt), filterR.process(value.r, dt) };
+	return {
+		filterX.process(value.x, dt), 
+		filterY.process(value.y, dt),
+		filterZ.process(value.z, dt),
+		filterR.process(value.r, dt),
+	};
 }
