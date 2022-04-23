@@ -286,7 +286,8 @@ void ARDrone::move3D(double vx, double vy, double vz, double vr)
 
         // Nomarization (-1.0 to +1.0)
         for (int i = 0; i < 4; i++) {
-            if (fabs(v[i]) > 1.0) v[i] /= fabs(v[i]);
+            if (v[i] >  1.0f) v[i] =  1.0f;
+            if (v[i] < -1.0f) v[i] = -1.0f;
         }
 
         // Send a command
@@ -314,7 +315,8 @@ void ARDrone::tilt3D(double phi, double theta, double gaz, double yaw)
 
         // Nomarization (-1.0 to +1.0)
         for (int i = 0; i < 4; i++) {
-            if (fabs(v[i]) > 1.0) v[i] /= fabs(v[i]);
+            if (v[i] >  1.0f) v[i] =  1.0f;
+            if (v[i] < -1.0f) v[i] = -1.0f;
         }
 
         // Send a command

@@ -12,7 +12,6 @@ private:
 	float oldValue, oldFilteredValue;
 	float tau;
 
-	std::chrono::milliseconds oldTime, currentTime;
 public:
 	LowPassFilter();
 	LowPassFilter(float tau);
@@ -20,7 +19,6 @@ public:
 	void setTau(float tau);
 	float getTau();
 
-	float process(float value);
 	float process(float value, float dt);
 };
 
@@ -39,7 +37,6 @@ public:
 	void setTau(vec2f tau);
 	vec2f getTau();
 
-	vec2f process(vec2f value);
 	vec2f process(vec2f value, float dt);
 };
 
@@ -58,7 +55,6 @@ public:
 	void setTau(vec3f tau);
 	vec3f getTau();
 
-	vec3f process(vec3f value);
 	vec3f process(vec3f value, float dt);
 };
 
@@ -77,7 +73,6 @@ public:
 	void setTau(vec4f tau);
 	vec4f getTau();
 
-	vec4f process(vec4f value);
 	vec4f process(vec4f value, float dt);
 };
 

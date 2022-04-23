@@ -1,12 +1,8 @@
 #include "low-pass-filter.h"
 
-LowPassFilter::LowPassFilter()
-	: oldTime(std::chrono::milliseconds()), currentTime(std::chrono::milliseconds()),
-	oldValue(0.0f), oldFilteredValue(0.0f), tau(0.0f) {}
+LowPassFilter::LowPassFilter() : oldValue(0.0f), oldFilteredValue(0.0f), tau(0.0f) {}
 
-LowPassFilter::LowPassFilter(float tau)
-	: oldTime(std::chrono::milliseconds()), currentTime(std::chrono::milliseconds()),
-	oldValue(0.0f), oldFilteredValue(0.0f), tau(tau) {}
+LowPassFilter::LowPassFilter(float tau) : oldValue(0.0f), oldFilteredValue(0.0f), tau(tau) {}
 
 
 void LowPassFilter::setTau(float tauIn)
@@ -17,14 +13,6 @@ void LowPassFilter::setTau(float tauIn)
 float LowPassFilter::getTau()
 {
 	return tau;
-}
-
-float LowPassFilter::process(float value)
-{
-	//currentTime std::chrono::system_clock::now().time_since_epoch().count();
-	float dt = (float) (currentTime - oldTime).count() / 1000;
-	oldTime = currentTime;
-	return process(value, dt);
 }
 
 float LowPassFilter::process(float value, float dt)
@@ -59,14 +47,6 @@ vec2f LowPassFilter2f::getTau()
 	return {
 		filterX.getTau(),
 		filterY.getTau(),
-	};
-}
-
-vec2f LowPassFilter2f::process(vec2f value)
-{
-	return {
-		filterX.process(value.x),
-		filterY.process(value.y),
 	};
 }
 
@@ -106,15 +86,6 @@ vec3f LowPassFilter3f::getTau()
 		filterX.getTau(),
 		filterY.getTau(),
 		filterZ.getTau(),
-	};
-}
-
-vec3f LowPassFilter3f::process(vec3f value)
-{
-	return {
-		filterX.process(value.x),
-		filterY.process(value.y),
-		filterZ.process(value.z),
 	};
 }
 
@@ -158,16 +129,6 @@ vec4f LowPassFilter4f::getTau()
 		filterY.getTau(),
 		filterZ.getTau(),
 		filterR.getTau(),
-	};
-}
-
-vec4f LowPassFilter4f::process(vec4f value)
-{
-	return {
-		filterX.process(value.x),
-		filterY.process(value.y),
-		filterZ.process(value.z),
-		filterR.process(value.r),
 	};
 }
 

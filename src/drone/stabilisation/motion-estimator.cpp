@@ -71,32 +71,20 @@ void MotionEstimator::onFirstImage()
 
 void MotionEstimator::onSecondImage()
 {
-	if (previousFeatures.size() > 0) {
-		lucasKanadeOpticalFlow();
-
-		cv::Point2f displacement = averageDisplacement(previousFeatures, currentFeatures);
-		vec2f dst = filter.process({ displacement.x, displacement.y }, timer.get());
-		displacement = cv::Point2f(dst.x, dst.y) / 50;
-
-		// update listeners
-		updateListeners({ -displacement.y, 0, -displacement.x, 0 });
-
-		// draw mean optical flow
-		Vec2fVisualizer v("Optical flow");
-		v.draw(displacement.x, displacement.y, cv::Scalar(0, 0, 255));
-
-		drawFeatures(colourImage, previousFeatures, currentFeatures);
-
-		float mag = cv::sqrt(displacement.x * displacement.x + displacement.y * displacement.y);
-		if (mag > maxMag) {
-			maxMag = mag;
-		}
-		//std::cout << displacement << "  " << timer.get() << "  " << maxMag << std::endl;
-	}
-	else {
+	if (previousFeatures.size() == 0) {
+		// find new features to track
 		findFeatures(currentImage, currentFeatures);
 		drawFeatures(currentImage, currentFeatures);
+
+		// notify no motion
+		filter.process({ 0, 0 }, timer.get());
+		updateListeners({ 0, 0, 0, 0 });
+
+		return;
 	}
+
+	lucasKanadeOpticalFlow();
+	motionFromOpticalFlow();
 
 	if (currentFeatures.size() < 12) {
 		findFeatures(currentImage, currentFeatures);
@@ -150,22 +138,6 @@ void MotionEstimator::drawFeatures(cv::Mat& image, std::vector<cv::Point2f>& old
 	cv::imshow("Features", display);
 }
 
-cv::Point2f MotionEstimator::averageDisplacement(std::vector<cv::Point2f>& oldPoints, std::vector<cv::Point2f>& newPoints)
-{
-	cv::Point2f average(0.0f, 0.0f);
-
-	int count = 0;
-
-	for (uint i = 0; i < newPoints.size(); i++) {
-		average += (newPoints[i] - oldPoints[i]);
-		count++;
-	}
-
-	average /= (count ? count : 1);
-
-	return average;
-}
-
 void MotionEstimator::lucasKanadeOpticalFlow()
 {
 	std::vector<cv::Point2f> newFeatures, goodNewFeatures, goodOldFeatures;
@@ -190,6 +162,44 @@ void MotionEstimator::lucasKanadeOpticalFlow()
 
 	previousFeatures = std::vector<cv::Point2f>(goodOldFeatures);
 	currentFeatures = std::vector<cv::Point2f>(goodNewFeatures);
+}
+
+void MotionEstimator::motionFromOpticalFlow()
+{
+	cv::Point2f displacement = averageDisplacement(previousFeatures, currentFeatures);
+	vec2f dst = filter.process({ displacement.x, displacement.y }, timer.get());
+	displacement = cv::Point2f(dst.x, dst.y) / 50;
+
+	// update listeners
+	updateListeners({ -displacement.y, 0, -displacement.x, 0 });
+
+	// draw mean optical flow
+	Vec2fVisualizer v("Optical flow");
+	v.draw(displacement.x, displacement.y, cv::Scalar(0, 0, 255));
+
+	drawFeatures(colourImage, previousFeatures, currentFeatures);
+
+	float mag = cv::sqrt(displacement.x * displacement.x + displacement.y * displacement.y);
+	if (mag > maxMag) {
+		maxMag = mag;
+	}
+	//std::cout << displacement << "  " << timer.get() << "  " << maxMag << std::endl;
+}
+
+cv::Point2f MotionEstimator::averageDisplacement(std::vector<cv::Point2f>& oldPoints, std::vector<cv::Point2f>& newPoints)
+{
+	cv::Point2f average(0.0f, 0.0f);
+
+	int count = 0;
+
+	for (uint i = 0; i < newPoints.size(); i++) {
+		average += (newPoints[i] - oldPoints[i]);
+		count++;
+	}
+
+	average /= (count ? count : 1);
+
+	return average;
 }
 
 void MotionEstimator::findEssentialMatrix()

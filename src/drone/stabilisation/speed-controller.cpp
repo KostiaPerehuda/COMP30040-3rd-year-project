@@ -2,10 +2,11 @@
 
 #include <iostream>
 
-SpeedController::SpeedController(float Kp, float Ki, float Kd, float tau)
+SpeedController::SpeedController(float Kp, float Ki, float Kd, float tau, bool additive)
 	: vx(Kp, Ki, Kd, 1, -1, tau), vy(Kp, Ki, Kd, 1, -1, tau),
 	vz(Kp, Ki, Kd, 1, -1, tau), vr(Kp, Ki, Kd, 1, -1, tau),
-	timer(), speed(), enabled(false), updated(false), visualizer("PID Output") {}
+	timer(), speed(), error(), additive(additive), enabled(false), updated(false),
+	errorVisualizer("Error"), speedVisualizer("PID Output") {}
 
 bool SpeedController::update(vec4f feedback)
 {
@@ -20,11 +21,21 @@ bool SpeedController::update(vec4f feedback)
 
 	float dt = timer.loop();
 
+	if (additive) {
+		error.x += feedback.x;
+		error.y += feedback.y;
+		error.z += feedback.z;
+		error.r += feedback.r;
+	}
+	else {
+		error = feedback;
+	}
+
 	speed = {
-		vx.update(0.0f, feedback.x, dt),
-		vy.update(0.0f, feedback.y, dt),
-		vz.update(0.0f, feedback.z, dt),
-		vr.update(0.0f, feedback.r, dt),
+		vx.update(0.0f, error.x, dt),
+		vy.update(0.0f, error.y, dt),
+		vz.update(0.0f, error.z, dt),
+		vr.update(0.0f, error.r, dt),
 	};
 
 	updated = oldSpeed.x != speed.x || oldSpeed.y != speed.y ||
@@ -32,7 +43,8 @@ bool SpeedController::update(vec4f feedback)
 
 	//if (updated) std::cout << "updated" << std::endl;
 
-	visualizer.draw(speed.z, speed.x);
+	speedVisualizer.draw(speed.z, speed.x);
+	errorVisualizer.draw(error.z, error.x);
 
 	unlock();
 	return updated;
@@ -63,7 +75,8 @@ void SpeedController::disable()
 {
 	lock();
 	enabled = false;
-	visualizer.draw(0, 0);
+	speedVisualizer.draw(0, 0);
+	errorVisualizer.draw(0, 0);
 	unlock();
 }
 
@@ -83,7 +96,9 @@ void SpeedController::resetSelf()
 {
 	updated = false;
 	speed = vec4f();
-	visualizer.draw(0, 0);
+	error = vec4f();
+	speedVisualizer.draw(0, 0);
+	errorVisualizer.draw(0, 0);
 	vx.reset();
 	vy.reset();
 	vz.reset();
@@ -149,4 +164,11 @@ void SpeedController::onBack(bool pressed)
 	vz.setKd(vz.getKd() - 0.025f);
 	vr.setKd(vr.getKd() - 0.025f);
 	std::cout << "Kd set to: " << vx.getKd() << std::endl;
+}
+
+void SpeedController::onRightTrigger(float value)
+{
+	if (value != 1.0f) return;
+	additive = !additive;
+	std::cout << "Set Mode to: " << (additive ? "ADDITIVE" : "INSTANTANEOUS") << std::endl;
 }

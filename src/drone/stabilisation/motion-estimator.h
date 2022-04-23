@@ -54,6 +54,7 @@ private:
 	void drawFeatures(cv::Mat& image, std::vector<cv::Point2f>& oldPoints, std::vector<cv::Point2f>& newPoints);
 
 	void lucasKanadeOpticalFlow();
+	void motionFromOpticalFlow();
 
 	void findEssentialMatrix();
 	void homography();

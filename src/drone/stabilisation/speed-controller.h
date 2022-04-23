@@ -15,18 +15,20 @@
 class SpeedController : public MotionListener, public GamepadListenerAdapter, private LockableObject
 {
 private:
-	Vec2fVisualizer visualizer;
+	Vec2fVisualizer errorVisualizer, speedVisualizer;
 
 	PidController vx, vy, vz, vr;
 	Timer timer;
 	vec4f speed;
+	vec4f error;
+	bool additive;
 
 	bool enabled;
 	bool updated;
 
 	void resetSelf();
 public:
-	SpeedController(float Kp, float Ki, float Kd, float tau);
+	SpeedController(float Kp, float Ki, float Kd, float tau, bool additive = false);
 
 	bool update(vec4f feedback) override;
 	bool isUpdated();
@@ -46,6 +48,7 @@ public:
 	void onDpadRight(bool pressed) override;
 	void onStart(bool pressed) override;
 	void onBack(bool pressed) override;
+	void onRightTrigger(float value) override;
 };
 
 

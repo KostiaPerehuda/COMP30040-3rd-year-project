@@ -55,16 +55,16 @@ vec4f DroneCommander::toTilt3DFormat(vec4f speed, bool dualRate)
 	// r = rotation
 
 	if (settings.dualRate || dualRate) return {
-		speed.z,
-		speed.x,
-		speed.y,
-		speed.r,
+		speed.z * 0.99f,
+		speed.x * 0.99f,
+		speed.y * 0.99f,
+		speed.r * 0.99f,
 	};
 	else return {
-		speed.z * 0.5f,
-		speed.x * 0.5f,
-		speed.y * 0.5f,
-		speed.r * 0.5f,
+		speed.z * 0.50f,
+		speed.x * 0.50f,
+		speed.y * 0.50f,
+		speed.r * 0.50f,
 	};
 }
 

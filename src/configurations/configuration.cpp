@@ -153,4 +153,8 @@ int Configuration::filesystemVideoImageProcessing(std::string name)
 	return 0;
 }
 
-Configuration::PidConfig Configuration::pidConfig = { 0.80f, 0.35f, 0.15f, 0.30f };
+// For Instantaneous mode
+Configuration::PidConfig Configuration::pidConfig = { 0.60f, 0.10f, 0.15f, 0.30f };
+
+// For Additive mode
+//Configuration::PidConfig Configuration::pidConfig = { 0.30f, 0.00f, 0.00f, 0.30f };
