@@ -2,6 +2,8 @@
 #define SPEED_CONTROLLER_H_
 
 
+#include "configurations/configuration.h"
+
 #include "core/listeners/gamepad-listener-interface.h"
 
 #include "drone/stabilisation/motion-listener.h"
@@ -17,6 +19,7 @@ class SpeedController : public MotionListener, public GamepadListenerAdapter, pr
 private:
 	Vec2fVisualizer errorVisualizer, speedVisualizer;
 
+	Configuration::PidConfig* config;
 	PidController vx, vy, vz, vr;
 	Timer timer;
 	vec4f speed;
@@ -28,7 +31,7 @@ private:
 
 	void resetSelf();
 public:
-	SpeedController(float Kp, float Ki, float Kd, float tau, bool additive = false);
+	SpeedController(bool additive = false);
 
 	bool update(vec4f feedback) override;
 	bool isUpdated();
@@ -49,6 +52,15 @@ public:
 	void onStart(bool pressed) override;
 	void onBack(bool pressed) override;
 	void onRightTrigger(float value) override;
+
+private:
+	void setKp(float Kp);
+	void setKi(float Ki);
+	void setKd(float Kd);
+	void setTau(float tau);
+
+	void set(float Kp, float Ki, float Kd, float tau);
+	void setConfig(Configuration::PidConfig*);
 };
 
 

@@ -39,7 +39,7 @@ int Configuration::droneFlight()
 	droneVideoManager.addImageListener(&estimator);
 
 	// PID speed controller
-	SpeedController pid(pidConfig.Kp, pidConfig.Ki, pidConfig.Kd, pidConfig.tau);
+	SpeedController pid;
 	estimator.addMotionListener(&pid);
 
 	// Drone commander
@@ -59,8 +59,18 @@ int Configuration::droneFlight()
 	// Launch application
 	std::thread applicationThread = application.spawn(5);
 
-	// wait
+	// Wait
 	applicationThread.join();
+
+	// Print final config values
+	std::cout << "\nFinal Config Values:\n";
+	std::cout << "PID Config: { "
+		<< pidConfig.Kp << ", " << pidConfig.Ki << ", "
+		<< pidConfig.Kd << ", " << pidConfig.tau << " }\n";
+	std::cout << "PID Config Additive: { "
+		<< pidConfigAdditive.Kp << ", " << pidConfigAdditive.Ki << ", "
+		<< pidConfigAdditive.Kd << ", " << pidConfigAdditive.tau << " }\n";
+
 	return 0;
 }
 
@@ -102,7 +112,7 @@ int Configuration::droneVideoImageProcessing()
 	}
 
 
-	// wait
+	// Wait
 	applicationThread.join();
 	return 0;
 }
@@ -126,7 +136,7 @@ int Configuration::filesystemVideoImageProcessing(std::string name)
 	aviVideoManager.addImageListener(&estimator);
 
 	// PID speed controller
-	SpeedController pid(pidConfig.Kp, pidConfig.Ki, pidConfig.Kd, pidConfig.tau);
+	SpeedController pid;
 	estimator.addMotionListener(&pid);
 
 	//// launch
@@ -147,14 +157,23 @@ int Configuration::filesystemVideoImageProcessing(std::string name)
 	// Launch application
 	std::thread applicationThread = application.spawn(5);
 
-	// wait
+	// Wait
 	applicationThread.join();
+
+	// Print final config values
+	std::cout << "\nFinal Config Values:\n";
+	std::cout << "PID Config: { "
+		<< pidConfig.Kp << ", " << pidConfig.Ki << ", "
+		<< pidConfig.Kd << ", " << pidConfig.tau << " }\n";
+	std::cout << "PID Config Additive: { "
+		<< pidConfigAdditive.Kp << ", " << pidConfigAdditive.Ki << ", "
+		<< pidConfigAdditive.Kd << ", " << pidConfigAdditive.tau << " }\n";
 
 	return 0;
 }
 
 // For Instantaneous mode
-Configuration::PidConfig Configuration::pidConfig = { 0.60f, 0.10f, 0.15f, 0.30f };
+Configuration::PidConfig Configuration::pidConfig         = { 0.60f, 0.10f, 0.15f, 0.30f, 0.025f };
 
 // For Additive mode
-//Configuration::PidConfig Configuration::pidConfig = { 0.30f, 0.00f, 0.00f, 0.30f };
+Configuration::PidConfig Configuration::pidConfigAdditive = { 0.02f, 0.00f, 0.00f, 0.30f, 0.010f };

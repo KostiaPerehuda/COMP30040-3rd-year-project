@@ -2,11 +2,19 @@
 
 #include <iostream>
 
-SpeedController::SpeedController(float Kp, float Ki, float Kd, float tau, bool additive)
-	: vx(Kp, Ki, Kd, 1, -1, tau), vy(Kp, Ki, Kd, 1, -1, tau),
-	vz(Kp, Ki, Kd, 1, -1, tau), vr(Kp, Ki, Kd, 1, -1, tau),
-	timer(), speed(), error(), additive(additive), enabled(false), updated(false),
-	errorVisualizer("Error"), speedVisualizer("PID Output") {}
+using Configuration::PidConfig;
+using Configuration::pidConfig;
+using Configuration::pidConfigAdditive;
+
+SpeedController::SpeedController(bool additive)
+	: additive(additive), config(nullptr),
+	vx(0, 0, 0, 1, -1, 0), vy(0, 0, 0, 1, -1, 0),
+	vz(0, 0, 0, 1, -1, 0), vr(0, 0, 0, 1, -1, 0),
+	timer(), speed(), error(), enabled(false), updated(false),
+	errorVisualizer("Error"), speedVisualizer("PID Output")
+{
+	setConfig(additive ? &pidConfigAdditive : &pidConfig);
+}
 
 bool SpeedController::update(vec4f feedback)
 {
@@ -40,8 +48,6 @@ bool SpeedController::update(vec4f feedback)
 
 	updated = oldSpeed.x != speed.x || oldSpeed.y != speed.y ||
 		oldSpeed.z != speed.z || oldSpeed.r != speed.r;
-
-	//if (updated) std::cout << "updated" << std::endl;
 
 	speedVisualizer.draw(speed.z, speed.x);
 	errorVisualizer.draw(error.z, error.x);
@@ -109,61 +115,43 @@ void SpeedController::resetSelf()
 void SpeedController::onDpadUp(bool pressed)
 {
 	if (pressed) return;
-	vx.setKp(vx.getKp() + 0.025f);
-	vy.setKp(vy.getKp() + 0.025f);
-	vz.setKp(vz.getKp() + 0.025f);
-	vr.setKp(vr.getKp() + 0.025f);
-	std::cout << "Kp set to: " << vx.getKp() << std::endl;
+	config->Kp += config->sensitivity;
+	setKp(config->Kp);
 }
 
 void SpeedController::onDpadDown(bool pressed)
 {
 	if (pressed) return;
-	vx.setKp(vx.getKp() - 0.025f);
-	vy.setKp(vy.getKp() - 0.025f);
-	vz.setKp(vz.getKp() - 0.025f);
-	vr.setKp(vr.getKp() - 0.025f);
-	std::cout << "Kp set to: " << vx.getKp() << std::endl;
+	config->Kp -= config->sensitivity;
+	setKp(config->Kp);
 }
 
 void SpeedController::onDpadLeft(bool pressed)
 {
 	if (pressed) return;
-	vx.setKi(vx.getKi() - 0.025f);
-	vy.setKi(vy.getKi() - 0.025f);
-	vz.setKi(vz.getKi() - 0.025f);
-	vr.setKi(vr.getKi() - 0.025f);
-	std::cout << "Ki set to: " << vx.getKi() << std::endl;
+	config->Ki -= config->sensitivity;
+	setKi(config->Ki);
 }
 
 void SpeedController::onDpadRight(bool pressed)
 {
 	if (pressed) return;
-	vx.setKi(vx.getKi() + 0.025f);
-	vy.setKi(vy.getKi() + 0.025f);
-	vz.setKi(vz.getKi() + 0.025f);
-	vr.setKi(vr.getKi() + 0.025f);
-	std::cout << "Ki set to: " << vx.getKi() << std::endl;
+	config->Ki += config->sensitivity;
+	setKi(config->Ki);
 }
 
 void SpeedController::onStart(bool pressed)
 {
 	if (pressed) return;
-	vx.setKd(vx.getKd() + 0.025f);
-	vy.setKd(vy.getKd() + 0.025f);
-	vz.setKd(vz.getKd() + 0.025f);
-	vr.setKd(vr.getKd() + 0.025f);
-	std::cout << "Kd set to: " << vx.getKd() << std::endl;
+	config->Kd += config->sensitivity;
+	setKd(config->Kd);
 }
 
 void SpeedController::onBack(bool pressed)
 {
 	if (pressed) return;
-	vx.setKd(vx.getKd() - 0.025f);
-	vy.setKd(vy.getKd() - 0.025f);
-	vz.setKd(vz.getKd() - 0.025f);
-	vr.setKd(vr.getKd() - 0.025f);
-	std::cout << "Kd set to: " << vx.getKd() << std::endl;
+	config->Kd -= config->sensitivity;
+	setKd(config->Kd);
 }
 
 void SpeedController::onRightTrigger(float value)
@@ -171,4 +159,56 @@ void SpeedController::onRightTrigger(float value)
 	if (value != 1.0f) return;
 	additive = !additive;
 	std::cout << "Set Mode to: " << (additive ? "ADDITIVE" : "INSTANTANEOUS") << std::endl;
+
+	setConfig(additive ? &pidConfigAdditive : &pidConfig);
+}
+
+void SpeedController::setKp(float Kp)
+{
+	vx.setKp(Kp);
+	vy.setKp(Kp);
+	vz.setKp(Kp);
+	vr.setKp(Kp);
+	std::cout << "Kp set to: " << config->Kp << std::endl;
+}
+
+void SpeedController::setKi(float Ki)
+{
+	vx.setKi(Ki);
+	vy.setKi(Ki);
+	vz.setKi(Ki);
+	vr.setKi(Ki);
+	std::cout << "Ki set to: " << config->Ki << std::endl;
+}
+
+void SpeedController::setKd(float Kd)
+{
+	vx.setKd(Kd);
+	vy.setKd(Kd);
+	vz.setKd(Kd);
+	vr.setKd(Kd);
+	std::cout << "Kd set to: " << config->Kd << std::endl;
+}
+
+void SpeedController::setTau(float tau)
+{
+	vx.setTau(tau);
+	vy.setTau(tau);
+	vz.setTau(tau);
+	vr.setTau(tau);
+	std::cout << "Tau set to: " << config->tau << std::endl;
+}
+
+void SpeedController::set(float Kp, float Ki, float Kd, float tau)
+{
+	setKp(Kp);
+	setKi(Ki);
+	setKd(Kd);
+	setTau(tau);
+}
+
+void SpeedController::setConfig(Configuration::PidConfig* configIn)
+{
+	config = configIn;
+	set(config->Kp, config->Ki, config->Kd, config->tau);
 }

@@ -8,10 +8,11 @@ namespace Configuration
 {
 	struct PidConfig
 	{
-		float Kp, Ki, Kd, tau;
+		float Kp, Ki, Kd, tau, sensitivity;
 	};
 
 	extern PidConfig pidConfig;
+	extern PidConfig pidConfigAdditive;
 
 
 
