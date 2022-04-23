@@ -2,14 +2,14 @@
 #include "drone-commander.h"
 
 DroneCommander::DroneCommander(ARDrone* drone)
-	: drone(drone), settings({ false, false, false }),
+	: drone(drone), settings({ false, false, false, true }),
 	isSpeedUpdated(false), stabilizer(nullptr), speed()
 {
 	switchCamera();
 }
 
 DroneCommander::DroneCommander(ARDrone* drone, SpeedController* stabilizer)
-	: drone(drone), settings({ false, false, false }),
+	: drone(drone), settings({ false, false, false, true }),
 	isSpeedUpdated(false), stabilizer(stabilizer), speed()
 {
 	setApplicaton(nullptr);
@@ -161,6 +161,12 @@ void DroneCommander::enableOrDisableStabilization()
 	}
 }
 
+void DroneCommander::enableOrDisableNativeStabilization()
+{
+	settings.nativeStabilization = !settings.nativeStabilization;
+	std::cout << "Native Stabilization " << (settings.nativeStabilization ? "ENABLED On Request" : "DISABLED") << "!\n";
+}
+
 void DroneCommander::shutdown()
 {
 	land();
@@ -189,6 +195,12 @@ void DroneCommander::onButtonY(bool pressed)
 {
 	if (pressed) return;
 	lock(); switchRate(); unlock();
+}
+
+void DroneCommander::onRightThumb(bool pressed)
+{
+	if (pressed) return;
+	lock(); enableOrDisableNativeStabilization(); unlock();
 }
 
 void DroneCommander::onLeftShoulder(bool pressed)
@@ -287,9 +299,13 @@ bool DroneCommander::poll()
 			drone->tilt3D(0, 0, 0, 0);
 			enableStabilizer();
 		}
-		else {
+		else if (settings.nativeStabilization) {
 			vec4f v = toMove3DFormat(speed);
 			drone->move3D(v.x, v.y, v.z, v.r);
+		}
+		else {
+			vec4f v = toTilt3DFormat(speed);
+			drone->tilt3D(v.x, v.y, v.z, v.r);
 		}
 
 	}

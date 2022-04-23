@@ -23,6 +23,7 @@ struct DroneSettings {
 	bool cameraMode;
 	bool dualRate;
 	bool autoStabilization;
+	bool nativeStabilization;
 };
 
 class DroneCommander : public GamepadListenerAdapter, public AbstractManager, public ApplicatonContainer, private LockableObject
@@ -52,6 +53,7 @@ private:
 	void enableStabilizer();
 	void disableStabilizer();
 	void enableOrDisableStabilization();
+	void enableOrDisableNativeStabilization();
 
 	void shutdown();
 public:
@@ -65,6 +67,7 @@ public:
 	void onButtonB(bool pressed) override;
 	void onButtonX(bool pressed) override;
 	void onButtonY(bool pressed) override;
+	void onRightThumb(bool pressed) override;
 	void onLeftShoulder(bool pressed) override;
 	void onRightShoulder(bool pressed) override;
 
