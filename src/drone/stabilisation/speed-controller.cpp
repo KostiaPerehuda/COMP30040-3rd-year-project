@@ -1,15 +1,17 @@
 #include "speed-controller.h"
 
 #include <iostream>
+#include <cmath>
 
 using Configuration::PidConfig;
 using Configuration::pidConfig;
 using Configuration::pidConfigAdditive;
 
-SpeedController::SpeedController(bool additive)
-	: additive(additive), config(nullptr),
+SpeedController::SpeedController(bool additive, bool useMagnitude)
+	: additive(additive), useMagnitude(useMagnitude), config(nullptr),
 	vx(0, 0, 0, 1, -1, 0), vy(0, 0, 0, 1, -1, 0),
 	vz(0, 0, 0, 1, -1, 0), vr(0, 0, 0, 1, -1, 0),
+	magnitude(0, 0, 0, 1, -1, 0),
 	timer(), speed(), error(), enabled(false), updated(false),
 	errorVisualizer("Error"), speedVisualizer("PID Output")
 {
@@ -27,8 +29,6 @@ bool SpeedController::update(vec4f feedback)
 
 	vec4f oldSpeed = { speed.x, speed.y, speed.z, speed.r };
 
-	float dt = timer.loop();
-
 	if (additive) {
 		error.x += feedback.x;
 		error.y += feedback.y;
@@ -39,12 +39,26 @@ bool SpeedController::update(vec4f feedback)
 		error = feedback;
 	}
 
-	speed = {
-		vx.update(0.0f, error.x, dt),
-		vy.update(0.0f, error.y, dt),
-		vz.update(0.0f, error.z, dt),
-		vr.update(0.0f, error.r, dt),
-	};
+	float dt = timer.loop();
+
+	if (useMagnitude) {
+		speed = {
+			vx.update(0.0f, error.x, dt),
+			vy.update(0.0f, error.y, dt),
+			vz.update(0.0f, error.z, dt),
+			vr.update(0.0f, error.r, dt),
+		};
+
+		magnitude.update(0.0f, getMagnitude(error), dt);
+	}
+	else {
+		speed = project(magnitude.update(0.0f, getMagnitude(error), dt), error);
+
+		vx.update(0.0f, error.x, dt);
+		vy.update(0.0f, error.y, dt);
+		vz.update(0.0f, error.z, dt);
+		vr.update(0.0f, error.r, dt);
+	}
 
 	updated = oldSpeed.x != speed.x || oldSpeed.y != speed.y ||
 		oldSpeed.z != speed.z || oldSpeed.r != speed.r;
@@ -54,6 +68,22 @@ bool SpeedController::update(vec4f feedback)
 
 	unlock();
 	return updated;
+}
+
+float SpeedController::getMagnitude(vec4f v)
+{
+	return std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.r * v.r);
+}
+
+vec4f SpeedController::project(float magnitude, vec4f v)
+{
+	float scale = magnitude / getMagnitude(v);
+	return {
+		v.x * scale,
+		v.y * scale,
+		v.z * scale,
+		v.r * scale,
+	};
 }
 
 bool SpeedController::isUpdated()
@@ -109,6 +139,7 @@ void SpeedController::resetSelf()
 	vy.reset();
 	vz.reset();
 	vz.reset();
+	magnitude.reset();
 	timer.loop();
 }
 
@@ -154,6 +185,13 @@ void SpeedController::onBack(bool pressed)
 	setKd(config->Kd);
 }
 
+void SpeedController::onLeftThumb(bool pressed)
+{
+	if (pressed) return;
+	useMagnitude = !useMagnitude;
+	std::cout << (useMagnitude ? "Use Magnitude!" : "Do Not Use Magnitude!") << std::endl;
+}
+
 void SpeedController::onRightTrigger(float value)
 {
 	if (value != 1.0f) return;
@@ -169,6 +207,7 @@ void SpeedController::setKp(float Kp)
 	vy.setKp(Kp);
 	vz.setKp(Kp);
 	vr.setKp(Kp);
+	magnitude.setKp(Kp);
 	std::cout << "Kp set to: " << config->Kp << std::endl;
 }
 
@@ -178,6 +217,7 @@ void SpeedController::setKi(float Ki)
 	vy.setKi(Ki);
 	vz.setKi(Ki);
 	vr.setKi(Ki);
+	magnitude.setKi(Ki);
 	std::cout << "Ki set to: " << config->Ki << std::endl;
 }
 
@@ -187,6 +227,7 @@ void SpeedController::setKd(float Kd)
 	vy.setKd(Kd);
 	vz.setKd(Kd);
 	vr.setKd(Kd);
+	magnitude.setKd(Kd);
 	std::cout << "Kd set to: " << config->Kd << std::endl;
 }
 
@@ -196,6 +237,7 @@ void SpeedController::setTau(float tau)
 	vy.setTau(tau);
 	vz.setTau(tau);
 	vr.setTau(tau);
+	magnitude.setTau(tau);
 	std::cout << "Tau set to: " << config->tau << std::endl;
 }
 

@@ -39,7 +39,7 @@ int Configuration::droneFlight()
 	droneVideoManager.addImageListener(&estimator);
 
 	// PID speed controller
-	SpeedController pid;
+	SpeedController pid(true);
 	estimator.addMotionListener(&pid);
 
 	// Drone commander
@@ -173,7 +173,7 @@ int Configuration::filesystemVideoImageProcessing(std::string name)
 }
 
 // For Instantaneous mode
-Configuration::PidConfig Configuration::pidConfig         = { 0.60f, 0.10f, 0.15f, 0.30f, 0.025f };
+Configuration::PidConfig Configuration::pidConfig         = { 0.600f, 0.100f, 0.150f, 0.30f, 0.025f };
 
 // For Additive mode
-Configuration::PidConfig Configuration::pidConfigAdditive = { 0.02f, 0.00f, 0.00f, 0.30f, 0.010f };
+Configuration::PidConfig Configuration::pidConfigAdditive = { 0.010f, 0.002f, 0.020f, 0.30f, 0.001f };

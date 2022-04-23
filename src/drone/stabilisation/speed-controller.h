@@ -20,18 +20,22 @@ private:
 	Vec2fVisualizer errorVisualizer, speedVisualizer;
 
 	Configuration::PidConfig* config;
-	PidController vx, vy, vz, vr;
+	PidController vx, vy, vz, vr, magnitude;
 	Timer timer;
 	vec4f speed;
 	vec4f error;
 	bool additive;
+	bool useMagnitude;
 
 	bool enabled;
 	bool updated;
 
+	float getMagnitude(vec4f v);
+	vec4f project(float magnitude, vec4f v);
+
 	void resetSelf();
 public:
-	SpeedController(bool additive = false);
+	SpeedController(bool additive = false, bool useMagnitude = false);
 
 	bool update(vec4f feedback) override;
 	bool isUpdated();
@@ -51,6 +55,7 @@ public:
 	void onDpadRight(bool pressed) override;
 	void onStart(bool pressed) override;
 	void onBack(bool pressed) override;
+	void onLeftThumb(bool pressed) override;
 	void onRightTrigger(float value) override;
 
 private:
