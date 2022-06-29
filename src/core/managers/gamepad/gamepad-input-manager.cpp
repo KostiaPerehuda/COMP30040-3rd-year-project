@@ -179,7 +179,7 @@ inline void GamepadInputManager::checkLeftThumb()
 		float x = normailzeWithSign(currentState.Gamepad.sThumbLX, leftThumbDeadZone, SHRT_MAX);
 		float y = normailzeWithSign(currentState.Gamepad.sThumbLY, leftThumbDeadZone, SHRT_MAX);
 		for (std::size_t i = 0; i < m_gamepadListeners.size(); ++i)
-			m_gamepadListeners[i]->onLeftThumb(x, y);
+			m_gamepadListeners[i]->onLeftThumb(x, -y);
 	}
 }
 
@@ -200,7 +200,7 @@ inline void GamepadInputManager::checkRightThumb()
 		float x = normailzeWithSign(currentState.Gamepad.sThumbRX, rightThumbDeadZone, SHRT_MAX);
 		float y = normailzeWithSign(currentState.Gamepad.sThumbRY, rightThumbDeadZone, SHRT_MAX);
 		for (std::size_t i = 0; i < m_gamepadListeners.size(); ++i)
-			m_gamepadListeners[i]->onRightThumb(x, y);
+			m_gamepadListeners[i]->onRightThumb(x, -y);
 	}
 }
 

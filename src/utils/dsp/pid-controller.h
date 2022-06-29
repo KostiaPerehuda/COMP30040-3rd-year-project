@@ -19,6 +19,9 @@ private:
 	// Controller components
 	float proportional, integral, differential;
 
+	// Integrator limits
+	float minIntegral, maxIntegral;
+
 	// Output limits
 	float minOutput, maxOutput;
 	
@@ -29,7 +32,9 @@ private:
 	float tau;
 
 public:
-	PidController(float Kp, float Ki, float Kd, float maxOutput, float minOutput, float tau);
+	PidController(float Kp, float Ki, float Kd, float maxOutput, float minOutput, float tau, float integralClampingRangeProportion);
+
+	PidController(float Kp, float Ki, float Kd, float maxOutput, float minOutput, float tau, float maxIntegral, float minIntegral);
 
 	float update(float setpoint, float measurement, float dt);
 
@@ -46,6 +51,9 @@ public:
 	void set(float Kp, float Ki, float Kd, float tau);
 
 	void reset();
+
+private:
+	void setIntegralClampingRange(float integralClampingRangeProportion);
 };
 
 

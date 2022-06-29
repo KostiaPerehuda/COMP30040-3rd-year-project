@@ -1,7 +1,14 @@
 #include "pid-controller.h"
 
-PidController::PidController(float Kp, float Ki, float Kd, float maxOutput, float minOutput, float tau)
+PidController::PidController(float Kp, float Ki, float Kd, float maxOutput, float minOutput, float tau, float integralClampingRangeProportion)
 	: Kp(Kp), Ki(Ki), Kd(Kd), maxOutput(maxOutput), minOutput(minOutput), tau(tau),
+	proportional(0), integral(0), differential(0), previousError(0), previousMeasurement(0)
+{
+	setIntegralClampingRange(integralClampingRangeProportion);
+}
+
+PidController::PidController(float Kp, float Ki, float Kd, float maxOutput, float minOutput, float tau, float maxIntegral, float minIntegral)
+	: Kp(Kp), Ki(Ki), Kd(Kd), maxOutput(maxOutput), minOutput(minOutput), tau(tau), maxIntegral(maxIntegral), minIntegral(minIntegral),
 	proportional(0), integral(0), differential(0), previousError(0), previousMeasurement(0) {}
 
 float PidController::update(float setpoint, float measurement, float dt)
@@ -17,8 +24,8 @@ float PidController::update(float setpoint, float measurement, float dt)
 	// Integral component with anti-wind-up via clamping
 	integral += Ki * dt * (error + previousError) / 2.0f;
 
-	float maxIntegral = (proportional > maxOutput) ? (maxOutput - proportional) : 0.0f;
-	float minIntegral = (proportional > minOutput) ? (minOutput - proportional) : 0.0f;
+	//float maxIntegral = (proportional > maxOutput) ? (maxOutput - proportional) : 0.0f;
+	//float minIntegral = (proportional > minOutput) ? (minOutput - proportional) : 0.0f;
 
 	if      (integral > maxIntegral)  integral = maxIntegral;
 	else if (integral < minIntegral)  integral = minIntegral;
@@ -99,4 +106,11 @@ void PidController::reset()
 
 	previousError       = 0.0f;
 	previousMeasurement = 0.0f;
+}
+
+void PidController::setIntegralClampingRange(float integralClampingRangeProportion)
+{
+	float integralOffset = (maxOutput - minOutput) * (1 - integralClampingRangeProportion) / 2;
+	minIntegral = minOutput + integralOffset;
+	maxIntegral = maxOutput - integralOffset;
 }

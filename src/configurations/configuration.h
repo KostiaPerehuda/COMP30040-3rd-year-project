@@ -8,17 +8,19 @@ namespace Configuration
 {
 	struct PidConfig
 	{
-		float Kp, Ki, Kd, tau, sensitivity;
+		float Kp, Ki, Kd, tau;
+		float KpSensitivity, KiSensitivity, KdSensitivity, tauSensitivity;
 	};
 
 	extern PidConfig pidConfig;
 	extern PidConfig pidConfigAdditive;
 
 
-
-	int droneVideoImageProcessing();
+	int minimalDroneFlight();
 	int droneFlight();
 	int filesystemVideoImageProcessing(std::string name);
+
+	int filesystemVideoMotionEstimatorTest(std::string name);
 };
 
 #endif /* CONFIGURATION_H_ */

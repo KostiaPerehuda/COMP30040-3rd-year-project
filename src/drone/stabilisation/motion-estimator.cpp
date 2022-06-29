@@ -103,7 +103,7 @@ void MotionEstimator::findFeatures(cv::Mat& image, std::vector<cv::Point2f>& poi
 	//   min euclidean distance between features), mask (if not empty => subset of image where features are detected)
 	//   derivative block size, to use Harris, free Harris param)
 	//cv::goodFeaturesToTrack(previousGrayImage_, previousPoints_, 100, 0.3, 7, cv::Mat(), 7, false, 0.04);
-	cv::goodFeaturesToTrack(image, points, 0, 0.5, 40, cv::Mat(), 7, false, 0.04);
+	cv::goodFeaturesToTrack(image, points, 0, 0.4, 40, cv::Mat(), 7, false, 0.04);
 }
 
 void MotionEstimator::drawFeatures(cv::Mat& image, std::vector<cv::Point2f>& points)

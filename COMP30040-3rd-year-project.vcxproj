@@ -113,6 +113,7 @@
     <ClCompile Include="src\utils\dsp\low-pass-filter.cpp" />
     <ClCompile Include="src\utils\dsp\pid-controller.cpp" />
     <ClCompile Include="src\utils\lockable-object.cpp" />
+    <ClCompile Include="src\utils\motion-tracer.cpp" />
     <ClCompile Include="src\utils\timer.cpp" />
     <ClCompile Include="src\utils\vec2f-visualizer.cpp" />
     <ClCompile Include="src\utils\video\display-and-record-video.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="src\utils\dsp\low-pass-filter.h" />
     <ClInclude Include="src\utils\dsp\pid-controller.h" />
     <ClInclude Include="src\utils\lockable-object.h" />
+    <ClInclude Include="src\utils\motion-tracer.h" />
     <ClInclude Include="src\utils\timer.h" />
     <ClInclude Include="src\utils\vec2f-visualizer.h" />
     <ClInclude Include="src\utils\vector.h" />

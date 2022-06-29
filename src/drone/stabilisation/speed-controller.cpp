@@ -9,11 +9,12 @@ using Configuration::pidConfigAdditive;
 
 SpeedController::SpeedController(bool additive, bool useMagnitude)
 	: additive(additive), useMagnitude(useMagnitude), config(nullptr),
-	vx(0, 0, 0, 1, -1, 0), vy(0, 0, 0, 1, -1, 0),
-	vz(0, 0, 0, 1, -1, 0), vr(0, 0, 0, 1, -1, 0),
-	magnitude(0, 0, 0, 1, -1, 0),
+	       vx(0, 0, 0, 1, -1, 0, 0.5), vy(0, 0, 0, 1, -1, 0, 0.5),
+	       vz(0, 0, 0, 1, -1, 0, 0.5), vr(0, 0, 0, 1, -1, 0, 0.5),
+	magnitude(0, 0, 0, 1, -1, 0, 0.5),
 	timer(), speed(), error(), enabled(false), updated(false),
-	errorVisualizer("Error"), speedVisualizer("PID Output")
+	errorVisualizer("Error"),
+	speedVisualizer("PID Output", -0.1f, 0.1f, -0.1f, 0.1f)
 {
 	setConfig(additive ? &pidConfigAdditive : &pidConfig);
 }
@@ -42,6 +43,14 @@ bool SpeedController::update(vec4f feedback)
 	float dt = timer.loop();
 
 	if (useMagnitude) {
+		speed = project(magnitude.update(0.0f, getMagnitude(error), dt), error);
+
+		vx.update(0.0f, error.x, dt);
+		vy.update(0.0f, error.y, dt);
+		vz.update(0.0f, error.z, dt);
+		vr.update(0.0f, error.r, dt);
+	}
+	else {
 		speed = {
 			vx.update(0.0f, error.x, dt),
 			vy.update(0.0f, error.y, dt),
@@ -50,14 +59,6 @@ bool SpeedController::update(vec4f feedback)
 		};
 
 		magnitude.update(0.0f, getMagnitude(error), dt);
-	}
-	else {
-		speed = project(magnitude.update(0.0f, getMagnitude(error), dt), error);
-
-		vx.update(0.0f, error.x, dt);
-		vy.update(0.0f, error.y, dt);
-		vz.update(0.0f, error.z, dt);
-		vr.update(0.0f, error.r, dt);
 	}
 
 	updated = oldSpeed.x != speed.x || oldSpeed.y != speed.y ||
@@ -146,42 +147,42 @@ void SpeedController::resetSelf()
 void SpeedController::onDpadUp(bool pressed)
 {
 	if (pressed) return;
-	config->Kp += config->sensitivity;
+	config->Kp += config->KpSensitivity;
 	setKp(config->Kp);
 }
 
 void SpeedController::onDpadDown(bool pressed)
 {
 	if (pressed) return;
-	config->Kp -= config->sensitivity;
+	config->Kp -= config->KpSensitivity;
 	setKp(config->Kp);
 }
 
 void SpeedController::onDpadLeft(bool pressed)
 {
 	if (pressed) return;
-	config->Ki -= config->sensitivity;
+	config->Ki -= config->KiSensitivity;
 	setKi(config->Ki);
 }
 
 void SpeedController::onDpadRight(bool pressed)
 {
 	if (pressed) return;
-	config->Ki += config->sensitivity;
+	config->Ki += config->KiSensitivity;
 	setKi(config->Ki);
 }
 
 void SpeedController::onStart(bool pressed)
 {
 	if (pressed) return;
-	config->Kd += config->sensitivity;
+	config->Kd += config->KdSensitivity;
 	setKd(config->Kd);
 }
 
 void SpeedController::onBack(bool pressed)
 {
 	if (pressed) return;
-	config->Kd -= config->sensitivity;
+	config->Kd -= config->KdSensitivity;
 	setKd(config->Kd);
 }
 

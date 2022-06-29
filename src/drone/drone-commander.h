@@ -56,11 +56,12 @@ private:
 	void enableOrDisableNativeStabilization();
 
 	void shutdown();
+
 public:
-	DroneCommander(ARDrone* drone);
-	DroneCommander(ARDrone* drone, SpeedController* stabilizer);
+	DroneCommander(ARDrone* drone, SpeedController* stabilizer = nullptr);
 
 	SpeedController* getStabilizer();
+
 	void setStabilizer(SpeedController* stabilizer);
 
 	void onButtonA(bool pressed) override;

@@ -1,18 +1,10 @@
 #include <iostream>
 #include "drone-commander.h"
 
-DroneCommander::DroneCommander(ARDrone* drone)
-	: drone(drone), settings({ false, false, false, true }),
-	isSpeedUpdated(false), stabilizer(nullptr), speed()
-{
-	switchCamera();
-}
-
 DroneCommander::DroneCommander(ARDrone* drone, SpeedController* stabilizer)
 	: drone(drone), settings({ false, false, false, true }),
 	isSpeedUpdated(false), stabilizer(stabilizer), speed()
 {
-	setApplicaton(nullptr);
 	switchCamera();
 }
 
@@ -34,15 +26,15 @@ vec4f DroneCommander::toMove3DFormat(vec4f speed)
 	// r = rotation
 
 	if (settings.dualRate) return {
-		speed.x *  5.0f * 0.99f,
+		speed.x * -5.0f * 0.99f,
 		speed.z * -5.0f * 0.99f,
-		speed.y *  1.0f * 0.99f,
+		speed.y * -1.0f * 0.99f,
 		speed.r * -2.0f * 0.99f,
 	};
 	else return {
-		speed.x *  2.5f,
+		speed.x * -2.5f,
 		speed.z * -2.5f,
-		speed.y *  0.5f,
+		speed.y * -0.5f,
 		speed.r * -1.0f,
 	};
 }
@@ -55,16 +47,16 @@ vec4f DroneCommander::toTilt3DFormat(vec4f speed, bool dualRate)
 	// r = rotation
 
 	if (settings.dualRate || dualRate) return {
-		speed.z * 0.99f,
-		speed.x * 0.99f,
-		speed.y * 0.99f,
-		speed.r * 0.99f,
+		speed.z *  0.99f,
+		speed.x *  0.99f,
+		speed.y *  0.99f,
+		speed.r *  0.99f,
 	};
 	else return {
-		speed.z * 0.50f,
-		speed.x * 0.50f,
-		speed.y * 0.50f,
-		speed.r * 0.50f,
+		speed.z *  0.50f,
+		speed.x *  0.50f,
+		speed.y *  0.50f,
+		speed.r *  0.50f,
 	};
 }
 
@@ -145,10 +137,10 @@ void DroneCommander::enableOrDisableStabilization()
 		return;
 	}
 
-	/*if (drone->onGround()) {
+	if (drone->onGround()) {
 		std::cout << "CANNOT enable or disable stabilization! Drone is on ground!\n";
 		return;
-	}*/
+	}
 
 	if (stabilizer->isEnabled()) {
 		disableStabilizer();
@@ -230,6 +222,9 @@ void DroneCommander::onLeftThumb(float x, float y)
 
 	lock();
 
+	Vec2fVisualizer v("LeftThumb");
+	v.draw(x, y);
+
 	if (drone->onGround()) {
 		unlock();
 		return;
@@ -255,6 +250,9 @@ void DroneCommander::onRightThumb(float x, float y)
 	// r = rotation
 
 	lock();
+
+	Vec2fVisualizer v("RightThumb");
+	v.draw(x, y);
 
 	if (drone->onGround()) {
 		unlock();
