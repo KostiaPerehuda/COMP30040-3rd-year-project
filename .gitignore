@@ -3,3 +3,4 @@
 /.vs/
 /win32bin/*
 !/win32bin/*.dll
+/videos/
